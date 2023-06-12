@@ -1,32 +1,32 @@
 export class Common {
   /**
    * This function clears a timeout from the ESX.SetTimeout function.
-   * @param id 
+   * @param id
    */
-  ClearTimeout(id: string | number) 
+  ClearTimeout(id: number): void;
 
   /**
    * This function dumps the given array to a readable string with a tree structure.
-   * @param array 
+   * @param array
    */
-  DumpTable(array: any[])
+  DumpTable(array: any[]): void;
 
   /**
    * This function gets a random string, with the defined length.
-   * @param length 
+   * @param length
    */
-  GetRandomString(length: number)
+  GetRandomString(length: number): string;
 
   /**
-   * 
-   * @param weaponName 
-   * @param weaponComponent 
+   *
+   * @param weaponName
+   * @param weaponComponent
    */
-  GetWeaponComponent(weaponName: string | number, weaponComponent: string): IWeaponComponent
+  GetWeaponComponent(weaponName: string | number, weaponComponent: string): IWeaponComponent;
 
   /**
    * This function gets the weapon label for a given weapon
-   * @param weaponName 
+   * @param weaponName
    */
   GetWeaponLabel(weaponName: string): string;
 
@@ -39,11 +39,11 @@ export class Common {
    * This function sets a timeout requiring two arguments, msec (milliseconds), and cb (callback).
    * @param milliseconds
    * @param callback
+   * @returns Timeout id
    */
-  SetTimeout(milliseconds: number, callback: Function);
+  SetTimeout(milliseconds: number, callback: Function): number;
 
   Math: ICommonMath;
-
 }
 
 declare interface IWeapon {
