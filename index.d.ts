@@ -1,5 +1,5 @@
 import { Game, IGetPlayerData, Scaleform, Streaming, UI } from "./@types/client";
-import { ConfigJob, XPlayer } from "./@types/server";
+import { ConfigJob, OneSync, XPlayer } from "./@types/server";
 import { Common } from "./common/common";
 
 // ================== CLIENT ================================
@@ -183,4 +183,6 @@ export class Server extends Common {
    * @param itemName An item
    */
   UseItem(playerId: number, itemName: string): void
+
+  OneSync: OneSync;
 }

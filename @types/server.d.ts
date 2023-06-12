@@ -408,3 +408,54 @@ export class XPlayer {
    */
   updateCoords(): void;
 }
+
+export class OneSync {
+  /**
+   * An async function that creates server-sided objects.
+   *
+   * **Note:** CreateObject is a RPC (Remote Procedure Call) Native, which means that it requres there to be a valid client nearby for it to be able to spawn!
+   * @param model Model of the object - can either be a string or a hash
+   * @param coords The coords where the object should be spawned.
+   * @param heading The heading the object will be facing
+   * @param cb The returned function when the vehicle has been spawned. The invoked function has 1 argument which is the entity's network id.
+   */
+  SpawnObject(model: string | number, coords: Coords, heading: number, cb?: (netId: number) => void): void;
+
+  /**
+   * An async function that creates server-sided peds.
+   *
+   * **Note:** CreateObject is a RPC (Remote Procedure Call) Native, which means that it requres there to be a valid client nearby for it to be able to spawn!
+   * @param model Model of the ped - can either be a string or a hash
+   * @param coords The coords where the ped should be spawned.
+   * @param heading The heading the ped will be facing
+   * @param cb The returned function when the ped has been spawned. The invoked function has 1 argument which is the ped's network id.
+   */
+  SpawnPed(model: string | number, coords: Coords, heading: number, cb?: (netId: number) => void): void;
+
+  /**
+   * An async function that creates a server-sided ped and then places them into a specific vehicle.
+   *
+   * **Note:** CreateObject is a RPC (Remote Procedure Call) Native, which means that it requres there to be a valid client nearby for it to be able to spawn!
+   * @param model Model of the ped - can either be a string or a hash
+   * @param vehicle The handle of the vehicle the ped will be spawned into
+   * @param seat Seat index that the ped will be sat in
+   * @param cb The returned function when the ped has been spawned. The invoked function has 1 argument which is the ped's network id.
+   */
+  SpawnPedInVehicle(model: string | number, vehicle: number, seat: number, cb?: (netId: number) => void): void;
+
+  /**
+   *
+   * @param model You can either specify a model, for example `blista`, or a vehicle hash.
+   * @param coords The coords where the vehicle should be spawned. You can also parse a vector type without any issues
+   * @param heading The heading to spawn the vehicle at
+   * @param Properties Sets the properties that the vehicle spawns with uses the same structure as `ESX.Game.SetVehicleProperties`
+   * @param cb The returned function when the vehicle has been spawned. The invoked function has 1 argument which is the **NetId** of the vehicle
+   */
+  SpawnVehicle(
+    model: string | number,
+    coords: Coords,
+    heading: number,
+    Properties?: any,
+    cb?: (netId: number) => void
+  ): void;
+}
