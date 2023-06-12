@@ -1,5 +1,5 @@
 import { Game, IGetPlayerData, Scaleform, Streaming, UI } from "./@types/client";
-import { XPlayer } from "./@types/server";
+import { ConfigJob, XPlayer } from "./@types/server";
 import { Common } from "./common/common";
 
 // ================== CLIENT ================================
@@ -73,7 +73,6 @@ export class Client extends Common {
 // ================== SERVER ================================
 // ==========================================================
 export class Server extends Common {
-
   /**
    * This function creates a pickup.
    * @param type The pickup type, valid inputs: item_standard for items, item_money for cash, item_account for an account and item_weapon for weapons
@@ -84,59 +83,93 @@ export class Server extends Common {
    * @param components Only used when type is item_weapon, an index-value table with components
    * @param tintIndex Only used when type is item_weapon, a tint index
    */
-  CreatePickup(type: string, name: string, count: number, label, playerId: number, components: any[], tintIndex: number): void
+  CreatePickup(type: string, name: string, count: number, label: string, playerId: number, components?: any[], tintIndex?: number): void
 
   /**
-   * This function returns an item label or null if not found.
+   * This function logs to a Discord Webhook.
+   * @param name Webhook name (found in `Config.logs.lua`)
+   * @param title Webhook title
+   * @param color Webhook colour (found in `Config.logs.lua`)
+   * @param message Message to log
+   */
+  DiscordLog(name: string|undefined, title: string, color: string|undefined, message: string): void;
+
+  /**
+   * This function logs to a Discord Webhook.
+   * @param name Webhook name (found in `Config.logs.lua`)
+   * @param title Webhook title
+   * @param color Webhook colour (found in `Config.logs.lua`)
+   * @param fields Fields to log
+   */
+  DiscordLog(name: string|undefined, title: string, color: string|undefined, fields: {name: string, value: string, inline: boolean}): void;
+
+  /**
+   * This function returns whether or not the job and grade specified is valid.
+   * @param job The name of the job.
+   * @param grade The grade of the job.
+   */
+  DoesJobExist(job: string, grade: number): boolean;
+
+  /**
+   * This function returns an array of all users. You can use this function to filter players to find specific types of people such as police or admins.
+   * @param key Filter key
+   * @param val Filter value
+   */
+  GetExtendedPlayers(key: string, val: any): XPlayer[];
+
+  /**
+   * This function returns an item label or `undefined` if not found.
    * @param item 	Item name
    */
-  GetItemLabel(item: string): string | null
+  GetItemLabel(item: string): string | undefined
+
+  /**
+   * Returns all known jobs along with their grades.
+   */
+  GetJobs(): Record<string, ConfigJob>;
  
   /**
-   * This function gets a ESX player object from a server id. Returns null for invalid players
+   * This function gets a ESX player object from a server id. Returns `undefined` for invalid players
    * @param source The player server id
    */
-  GetPlayerFromId(source: any): XPlayer
+  GetPlayerFromId(source: number): XPlayer | undefined
 
   /**
-   * This function returns the ESX player from the Rockstar identifier. Returns null if no player is found.
+   * This function returns the ESX player from the Rockstar identifier. Returns `undefined` if no player is found.
    * @param identifier 
    */
-  GetPlayerFromIdentifier(identifier: any): XPlayer | null
+  GetPlayerFromIdentifier(identifier: string): XPlayer | undefined
 
   /**
-   * This function returns an array of all online players ID's.
-   * 
-   * You can use this to access each players data.
+   * @deprecated As of version 1.9, this function has been deprecated and removed!
+   * Calling this function will return ESX.GetExtendedPlayers.
    */
   GetPlayers(): XPlayer[]
 
   /**
+   * Registers a command using ESX functions.
+   * @param name Name of command
+   * @param Permissions Minimum permission group
+   * @param cb Function to run
+   * @param allowConsole Can be ran from console
+   * @param suggestion Chat suggestion
+   */
+  RegisterCommand(name: string, Permissions: string, cb: (xPlayer: XPlayer, args: any[], showError: boolean) => void, allowConsole: boolean, suggestion?: {help: string, arguments: {name: string, help: string, type?: 'number'|'player'|'string'|'item'|'weapon'|'any'}[]}): void;
+
+  /**
    * This function registers a server callback.
    * @param name Server callback name
-   * @param cb Callback function, which contains an varied size of arguments depending on how many arguments parsed from client
+   * @param handler Callback handler, which contains an varied size of arguments depending on how many arguments are sent from client
+   * @param args The args provided after the handler on the client TriggerServerCallback
    */
-  RegisterServerCallback(name: string, cb: Function): void
+  RegisterServerCallback(name: string, handler: (playerId: number, cb: (...args: any[]) => void) => void, ...args: any[]): void
 
   /**
    * This function registers an item as usable.
    * @param item Item to register as usable
    * @param cb Callback function
    */
-  RegisterUsableItem(item: string, cb: Function): void
-
-  /**
-   * This function saves the player to database. It is async, and a function (optional) is invoked once saving is complete.
-   * @param xPlayer An ESX player
-   * @param cb Callback function
-   */
-  SavePlayer(xPlayer: number | string, cb: Function): void
-
-  /**
-   * This function saves all players to database. It is async, and a function (optional) is invoked once saving is complete.
-   * @param cb Callback function
-   */
-  SavePlayers(cb: Function): void
+  RegisterUsableItem(item: string, cb: (playerId: number) => void): void
 
   /**
    * This function writes a trace if debugging is enabled in the configuration file.
