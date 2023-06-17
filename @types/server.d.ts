@@ -390,11 +390,8 @@ export class XPlayer {
   /**
    * This function shows a basic notification to the player.
    * @param msg The message to display
-   * @param flash Flash the notification?
-   * @param saveToBrief Save to breif? Located in Pause Menu > Help
-   * @param hudColorIndex The background color, see https://gyazo.com/68bd384455fceb0a85a8729e48216e15 for available colors
    */
-  showNotification(msg: string, flash?: boolean, saveToBrief?: boolean, hudColorIndex?: number): void;
+  showNotification(msg: string): void;
 
   /**
    * This function triggers an client event for the player.
