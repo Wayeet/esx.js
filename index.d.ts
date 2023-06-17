@@ -160,9 +160,8 @@ export class Server extends Common {
    * This function registers a server callback.
    * @param name Server callback name
    * @param handler Callback handler, which contains an varied size of arguments depending on how many arguments are sent from client
-   * @param args The args provided after the handler on the client TriggerServerCallback
    */
-  RegisterServerCallback(name: string, handler: (playerId: number, cb: (...args: any[]) => void) => void, ...args: any[]): void
+  RegisterServerCallback(name: string, handler: (playerId: number, cb: (...args: any[]) => void, ...args: any[]) => void): void
 
   /**
    * This function registers an item as usable.
