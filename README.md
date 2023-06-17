@@ -30,31 +30,24 @@ First you need to import either the `Client` class or `Server` class.
 
 ### `Client`
 
-```js
-import { Client } from 'esx.js'
+```ts
+import { Client } from "esx.js";
 
-let ESX: Client = null
-
-setImmediate (() => {
-  emit('esx:getSharedObject', (obj: Client) => (ESX = obj));
-})
-
+const ESX: Client = exports["es_extended"].getSharedObject();
 ```
 
 ### `Server`
-```js
-import { Server } from 'esx.js'
+```ts
+import { Server } from "esx.js";
 
-let ESX: Server = null
-
-emit('esx:getSharedObject', (obj: Server) => (ESX = obj));
+const ESX: Server = exports["es_extended"].getSharedObject();
 ```
 
-## You can also import a single type:
-```js
-import { XPlayer } from 'esx.js/@types/server'
+### You can also import a single type:
+```ts
+import { XPlayer } from "esx.js/@types/server";
 
-const Player: XPlayer
+const xPlayer: XPlayer = ESX.GetPlayerFromId(source);
 ```
 
 ### That's it. Now you are ready to rock the world!
