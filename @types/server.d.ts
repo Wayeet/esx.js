@@ -1,12 +1,4 @@
-declare interface InventoryItem {
-  name: string;
-  count: number;
-  label: string;
-  weight: number;
-  usable: boolean;
-  rare: boolean;
-  canRemove: boolean;
-}
+import { Account, Coords, InventoryItem, Job, LoadoutItem, PlayerData } from './common';
 
 declare interface JobGrade {
   grade: number;
@@ -23,42 +15,7 @@ declare interface ConfigJob {
   grades: Record<string, JobGrade>;
 }
 
-declare interface Job {
-  id: number;
-  name: string;
-  label: string;
-  grade: number;
-  grade_name: string;
-  grade_label: string;
-  grade_salary: number;
-  skin_male: any[];
-  skin_female: any[];
-}
-
-declare interface LoadoutItem {
-  name: string;
-  ammo: number;
-  label: string;
-  components: any[];
-}
-
-declare interface Coords {
-  x: number;
-  y: number;
-  Z: number;
-}
-
-declare interface Account {
-  name: string;
-  money: number;
-  label: string;
-}
-
-export class XPlayer {
-  /**
-   * The Server ID for a given player
-   */
-  source: number;
+export class XPlayer implements PlayerData {
   accounts: Account[];
   coords: Coords;
   group: string;
@@ -68,9 +25,11 @@ export class XPlayer {
   loadout: LoadoutItem[];
   name: string;
   playerId: number;
-  variables: any;
+  source: number;
+  variables: Record<string, any>;
   weight: number;
   maxWeight: number;
+  metadata: Record<string, any>;
 
   /**
    * This function adds account money.
