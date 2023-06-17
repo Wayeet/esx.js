@@ -162,15 +162,6 @@ export class XPlayer implements PlayerData {
   getLoadout(minimal?: boolean): LoadoutItem[];
 
   /**
-   * @private
-   * This function gets missing accounts. It's an internal function used when saving player data to database and should not be used.
-   * @param cb 	Callback function with missingAccounts (index-value table) as argument
-   *
-   * The returned table contains an index-value table, and for each child there is a key-value table with the following content: Key: Account name | Value:  Account label
-   */
-  getMissingAccounts(cb: Function): void;
-
-  /**
    * This function gets the current cash balance.
    */
   getMoney(): number;
