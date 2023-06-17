@@ -51,6 +51,7 @@ declare interface IWeapon {
   label: string;
   components: IWeaponComponent[];
 }
+
 declare interface IWeaponComponent {
   name: string;
   hash: number;
