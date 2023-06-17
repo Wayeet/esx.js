@@ -41,7 +41,7 @@ export class Common {
    * @param callback
    * @returns Timeout id
    */
-  SetTimeout(milliseconds: number, callback: Function): number;
+  SetTimeout(milliseconds: number, callback: () => void): number;
 
   Math: ICommonMath;
 }
