@@ -1,4 +1,4 @@
-import { Account, Coords, InventoryItem, Job, LoadoutItem } from './common';
+import { Coords } from './common';
 
 declare interface VehicleProperties {
   /**
