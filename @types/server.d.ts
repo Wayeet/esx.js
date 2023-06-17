@@ -1,6 +1,6 @@
 import { Account, Coords, InventoryItem, Job, LoadoutItem, PlayerData } from "./common";
 
-declare interface JobGrade {
+export interface JobGrade {
     grade: number;
     label: string;
     salary: number;
@@ -8,29 +8,14 @@ declare interface JobGrade {
     skin_female: any[];
 }
 
-declare interface ConfigJob {
+export interface ConfigJob {
     name: string;
     label: string;
     /** Grades index by strings: `'0'`, `'1'`, `'2'` etc. */
     grades: Record<string, JobGrade>;
 }
 
-export class XPlayer implements PlayerData {
-    accounts: Account[];
-    coords: Coords;
-    group: string;
-    identifier: string;
-    inventory: InventoryItem[];
-    job: Job;
-    loadout: LoadoutItem[];
-    name: string;
-    playerId: number;
-    source: number;
-    variables: Record<string, any>;
-    weight: number;
-    maxWeight: number;
-    metadata: Record<string, any>;
-
+export interface XPlayer extends PlayerData {
     /**
      * This function adds account money.
      * @param account An valid account, a list of valid accounts can be found in the configuration file
@@ -356,7 +341,7 @@ export class XPlayer implements PlayerData {
     updateCoords(): void;
 }
 
-export class OneSync {
+export interface OneSync {
     /**
      * An async function that creates server-sided objects.
      *

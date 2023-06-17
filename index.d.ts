@@ -1,12 +1,8 @@
 import { Game, ProgressbarOptions, Scaleform, Streaming, UI } from "./@types/client";
-import { Coords, PlayerData } from "./@types/common";
+import { Common, Coords, PlayerData } from "./@types/common";
 import { ConfigJob, OneSync, XPlayer } from "./@types/server";
-import { Common } from "./common/common";
 
-// ================== CLIENT ================================
-// ==========================================================
-
-export class Client extends Common {
+export interface Client extends Common {
     /**
      * This function gets player data.
      */
@@ -114,9 +110,7 @@ export class Client extends Common {
     UI: UI;
 }
 
-// ================== SERVER ================================
-// ==========================================================
-export class Server extends Common {
+export interface Server extends Common {
     /**
      * This function creates a pickup.
      * @param type The pickup type, valid inputs: item_standard for items, item_money for cash, item_account for an account and item_weapon for weapons

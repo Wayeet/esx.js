@@ -1,6 +1,6 @@
 import { Coords } from "./common";
 
-declare interface VehicleProperties {
+export interface VehicleProperties {
     /**
      * The vehicle hash
      */
@@ -149,14 +149,14 @@ declare interface VehicleProperties {
     modLivery: number;
 }
 
-export declare interface ProgressbarOptions {
+export interface ProgressbarOptions {
     FreezePlayer?: boolean;
     animation?: { type: "anim"; dict: string; lib: string } | { type: "Scenario"; Scenario: string };
     onFinish?: () => void;
     onCancel?: () => void;
 }
 
-declare interface Menu {
+export interface MenuObject {
     type: string;
     namespace: string;
     name: string;
@@ -173,7 +173,7 @@ declare interface Menu {
     removeElement: (query: Record<string, any>) => void;
 }
 
-export class Game {
+export interface Game {
     /**
      * This function deletes an object.
      * @param object The object handle
@@ -371,7 +371,7 @@ export class Game {
     Utils: GameUtils;
 }
 
-declare class GameUtils {
+export interface GameUtils {
     /**
      * This function draws 3D text on the specified coords. Must be drawn every frame, ideally in a loop. size and font arguments are optional.
      * @param coords The coords where the text should be.
@@ -382,7 +382,7 @@ declare class GameUtils {
     DrawText3D(coords: Coords, text: string, size: number, font: string): void;
 }
 
-export class Scaleform {
+export interface Scaleform {
     /**
      * This function shows the 'Breaking News' scaleform used multiple times in the campaign.
      * @param title Title text
@@ -418,7 +418,7 @@ export class Scaleform {
     Utils: ScaleformUtils;
 }
 
-declare class ScaleformUtils {
+export interface ScaleformUtils {
     /**
      * This function requests and returns a scaleform handle for the movie parsed.
      * @param movie The movie name
@@ -426,7 +426,7 @@ declare class ScaleformUtils {
     RequestScaleformMovie(movie: string): number;
 }
 
-export class Streaming {
+export interface Streaming {
     /**
      * This function requests and returns the nimation directory parsed. A very common usage it to play animations using TaskPlayAnim(). You can use Alex Guirre's Animations List found on Github.
      *
@@ -470,7 +470,7 @@ export class Streaming {
     RequestWeaponAsset(weaponHash: string | number, cb: () => void): void;
 }
 
-export class UI {
+export interface UI {
     /**
      * This function shows an inventory item notification.
      * @param add
@@ -482,7 +482,7 @@ export class UI {
     Menu: Menu;
 }
 
-declare class Menu {
+export interface Menu {
     /**
      * This function closes a menu.
      * @param type
@@ -502,7 +502,7 @@ declare class Menu {
      * @param namespace
      * @param name
      */
-    GetOpened(type: string | number, namespace: string, name: string): Menu;
+    GetOpened(type: string | number, namespace: string, name: string): MenuObject;
 
     /**
      * This function checks if a menu is open.
@@ -532,7 +532,7 @@ declare class Menu {
         cancel: any,
         change: string,
         close: () => void
-    ): Menu;
+    ): MenuObject;
 
     /**
      * This function registers a menu type.
