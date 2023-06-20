@@ -211,10 +211,11 @@ export interface Server extends Common {
         cb: (xPlayer: XPlayer, args: any[], showError: boolean) => void,
         allowConsole: boolean,
         suggestion?: {
-            help: string;
-            arguments: {
+            help?: string;
+            arguments?: {
                 name: string;
                 help: string;
+                validate?: boolean;
                 type?: "number" | "player" | "string" | "item" | "weapon" | "any";
             }[];
         }
