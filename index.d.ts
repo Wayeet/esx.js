@@ -166,7 +166,7 @@ export interface Server extends Common {
      * @param key Filter key
      * @param val Filter value
      */
-    GetExtendedPlayers(key: string, val: any): XPlayer[];
+    GetExtendedPlayers(key?: string, val?: any): XPlayer[];
 
     /**
      * This function returns an item label or `undefined` if not found.
