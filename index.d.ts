@@ -449,12 +449,11 @@ export interface Server extends Common {
         }
     ): void;
 
-    // TODO: Invalid return type
     /**
      * @deprecated As of version 1.9, this function has been deprecated and removed!
      * Calling this function will return ESX.GetExtendedPlayers.
      */
-    GetPlayers(): XPlayer[];
+    GetPlayers(): number[];
 
     /**
      * This function returns an array of all users. You can use this function to filter players to find specific types of people such as police or admins.
