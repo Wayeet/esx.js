@@ -162,6 +162,9 @@ export interface Common {
      */
     GetWeaponList(): Weapon[];
 
+    Math: Math;
+    Table: Table;
+
     /**
      * This function sets a timeout requiring two arguments, msec (milliseconds), and cb (callback).
      * @param milliseconds
@@ -170,6 +173,9 @@ export interface Common {
      */
     SetTimeout(milliseconds: number, callback: () => void): number;
 
-    Math: Math;
-    Table: Table;
+    /**
+     * This function clears a timeout from the ESX.SetTimeout function.
+     * @param id
+     */
+    ClearTimeout(id: number): void;
 }
