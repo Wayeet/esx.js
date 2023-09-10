@@ -86,14 +86,15 @@ export interface XPlayer extends PlayerData {
 
     get(k: any): any;
 
-    // TODO: missing minimal param
     /**
      * The returned table contains an index-value table of all accounts, and for each child there is a key-value tabl with the following content:
      * @field name - Account name
      * @field money - Account balance
      * @field label - Account label
+     * @param minimal Return accounts in a key-value table where key is account name and value is the amount of money in the account
      */
-    getAccounts(): Account[];
+    getAccounts(minimal?: false): Account[];
+    getAccounts(minimal: true): Record<string, number>;
 
     /**
      * This function gets details (returned in an table) for an account.
@@ -103,9 +104,10 @@ export interface XPlayer extends PlayerData {
 
     /**
      * This function returns the entire player inventory.
-     * @param minimal Return inventory in a key-value table where key is item name, and only add items with count over 0 to that table.
+     * @param minimal Return inventory in a key-value table where key is item name and value is the item count, and only add items with count over 0 to that table.
      */
-    getInventory(minimal: boolean): InventoryItem[];
+    getInventory(minimal?: false): InventoryItem[];
+    getInventory(minimal: true): Record<string, number>;
 
     /**
      * This function returns the current player job object.
@@ -150,38 +152,40 @@ export interface XPlayer extends PlayerData {
      */
     removeAccountMoney(account: string, money: number): void;
 
-    // TODO: missing param metadata
     /**
      * This function gets an inventory item.
      * @param item Item name
+     * @param metadata does nothing
      */
-    getInventoryItem(item: string): InventoryItem;
+    getInventoryItem(item: string, metadata?: any): InventoryItem;
 
-    // TODO: missing params metadata and slot
     /**
      * This function adds an inventory item.
      * @param item 	Item name
      * @param count Amount of item to add
+     * @param metadata does nothing
+     * @param slot does nothing
      */
-    addInventoryItem(item: string, count: number): void;
+    addInventoryItem(item: string, count: number, metadata?: any, slot?: any): void;
 
-    // TODO: missing params metadata and slot
     /**
      * This function removes an inventory item.
      * @param item Item name, valid items can be found in database table items
      * @param count Amount of the item to remove
+     * @param metadata does nothing
+     * @param slot does nothing
      */
-    removeInventoryItem(item: string, count: number): void;
+    removeInventoryItem(item: string, count: number, metadata?: any, slot?: any): void;
 
-    // TODO: missing param metadata
     /**
      * This function sets an inventory item count
      *
      * WARNING: This function will not check if the player weight limit exceeds. Recommended to use in comibation with xPlayer.canCarryItem(item, count)
      * @param item Item name, valid items can be found in database table items
      * @param count New item count
+     * @param metadata does nothing
      */
-    setInventoryItem(item: string, count: number): void;
+    setInventoryItem(item: string, count: number, metadata?: any): void;
 
     /**
      * This functions returns the current player weight in a number type, can be used to do calculations.
@@ -194,8 +198,9 @@ export interface XPlayer extends PlayerData {
      * This function is used to determinate if a player can carry an item, and is the successor to the previous item limit checks
      * @param item Item name
      * @param count Item count
+     * @param metadata does nothing
      */
-    canCarryItem(item: string, count: number): boolean;
+    canCarryItem(item: string, count: number, metadata?: any): boolean;
 
     /**
      * This function is used to determinate if a player can swap an item for some other item.
