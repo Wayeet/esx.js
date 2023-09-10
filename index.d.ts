@@ -112,90 +112,10 @@ export interface Client extends Common {
 
 export interface Server extends Common {
     /**
-     * This function creates a pickup.
-     * @param type The pickup type, valid inputs: item_standard for items, item_money for cash, item_account for an account and item_weapon for weapons
-     * @param name The name of either the item, account or weapon
-     * @param count The count of the item, cash, account or weapon ammo
-     * @param label The pickup label drawn
-     * @param playerId The player server id who created the pickup, used to determine pickup spawn point
-     * @param components Only used when type is item_weapon, an index-value table with components
-     * @param tintIndex Only used when type is item_weapon, a tint index
+     * This function writes a trace if debugging is enabled in the configuration file.
+     * @param msg Anything to print to console
      */
-    CreatePickup(
-        type: string,
-        name: string,
-        count: number,
-        label: string,
-        playerId: number,
-        components?: any[],
-        tintIndex?: number
-    ): void;
-
-    /**
-     * This function logs to a Discord Webhook.
-     * @param name Webhook name (found in `Config.logs.lua`)
-     * @param title Webhook title
-     * @param color Webhook colour (found in `Config.logs.lua`)
-     * @param message Message to log
-     */
-    DiscordLog(name: string | undefined, title: string, color: string | undefined, message: string): void;
-
-    /**
-     * This function logs to a Discord Webhook.
-     * @param name Webhook name (found in `Config.logs.lua`)
-     * @param title Webhook title
-     * @param color Webhook colour (found in `Config.logs.lua`)
-     * @param fields Fields to log
-     */
-    DiscordLog(
-        name: string | undefined,
-        title: string,
-        color: string | undefined,
-        fields: { name: string; value: string; inline: boolean }
-    ): void;
-
-    /**
-     * This function returns whether or not the job and grade specified is valid.
-     * @param job The name of the job.
-     * @param grade The grade of the job.
-     */
-    DoesJobExist(job: string, grade: number): boolean;
-
-    /**
-     * This function returns an array of all users. You can use this function to filter players to find specific types of people such as police or admins.
-     * @param key Filter key
-     * @param val Filter value
-     */
-    GetExtendedPlayers(key?: string, val?: any): XPlayer[];
-
-    /**
-     * This function returns an item label or `undefined` if not found.
-     * @param item 	Item name
-     */
-    GetItemLabel(item: string): string | undefined;
-
-    /**
-     * Returns all known jobs along with their grades.
-     */
-    GetJobs(): Record<string, ConfigJob>;
-
-    /**
-     * This function gets a ESX player object from a server id. Returns `undefined` for invalid players
-     * @param source The player server id
-     */
-    GetPlayerFromId(source: number): XPlayer | undefined;
-
-    /**
-     * This function returns the ESX player from the Rockstar identifier. Returns `undefined` if no player is found.
-     * @param identifier
-     */
-    GetPlayerFromIdentifier(identifier: string): XPlayer | undefined;
-
-    /**
-     * @deprecated As of version 1.9, this function has been deprecated and removed!
-     * Calling this function will return ESX.GetExtendedPlayers.
-     */
-    GetPlayers(): XPlayer[];
+    Trace(msg: any): void;
 
     /**
      * Registers a command using ESX functions.
@@ -221,6 +141,121 @@ export interface Server extends Common {
         }
     ): void;
 
+    // TODO: Invalid return type
+    /**
+     * @deprecated As of version 1.9, this function has been deprecated and removed!
+     * Calling this function will return ESX.GetExtendedPlayers.
+     */
+    GetPlayers(): XPlayer[];
+
+    /**
+     * This function returns an array of all users. You can use this function to filter players to find specific types of people such as police or admins.
+     * @param key Filter key
+     * @param val Filter value
+     */
+    GetExtendedPlayers(key?: string, val?: any): XPlayer[];
+
+    /**
+     * This function gets a ESX player object from a server id. Returns `undefined` for invalid players
+     * @param source The player server id
+     */
+    GetPlayerFromId(source: number): XPlayer | undefined;
+
+    /**
+     * This function returns the ESX player from the Rockstar identifier. Returns `undefined` if no player is found.
+     * @param identifier
+     */
+    GetPlayerFromIdentifier(identifier: string): XPlayer | undefined;
+
+    // TODO: GetIdentifier
+
+    // TODO: GetVehicleType
+
+    /**
+     * This function logs to a Discord Webhook.
+     * @param name Webhook name (found in `Config.logs.lua`)
+     * @param title Webhook title
+     * @param color Webhook colour (found in `Config.logs.lua`)
+     * @param message Message to log
+     */
+    DiscordLog(name: string | undefined, title: string, color: string | undefined, message: string): void;
+
+    /**
+     * This function logs to a Discord Webhook.
+     * @param name Webhook name (found in `Config.logs.lua`)
+     * @param title Webhook title
+     * @param color Webhook colour (found in `Config.logs.lua`)
+     * @param fields Fields to log
+     */
+    DiscordLogFields(
+        name: string | undefined,
+        title: string,
+        color: string | undefined,
+        fields: { name: string; value: string; inline: boolean }
+    ): void;
+
+    // TODO: RefreshJobs
+
+    /**
+     * This function registers an item as usable.
+     * @param item Item to register as usable
+     * @param cb Callback function
+     */
+    RegisterUsableItem(item: string, cb: (playerId: number) => void): void;
+
+    /**
+     * This function is to force a player to use an item.
+     * @param playerId Player server id
+     * @param itemName An item
+     */
+    UseItem(playerId: number, itemName: string): void;
+
+    // TODO: RegisterPlayerFunctionOverrides
+
+    // TODO: SetPlayerFunctionOverride
+
+    /**
+     * This function returns an item label or `undefined` if not found.
+     * @param item 	Item name
+     */
+    GetItemLabel(item: string): string | undefined;
+
+    /**
+     * Returns all known jobs along with their grades.
+     */
+    GetJobs(): Record<string, ConfigJob>;
+
+    // TODO: GetUsableItems
+
+    /**
+     * This function creates a pickup.
+     * @param type The pickup type, valid inputs: item_standard for items, item_money for cash, item_account for an account and item_weapon for weapons
+     * @param name The name of either the item, account or weapon
+     * @param count The count of the item, cash, account or weapon ammo
+     * @param label The pickup label drawn
+     * @param playerId The player server id who created the pickup, used to determine pickup spawn point
+     * @param components Only used when type is item_weapon, an index-value table with components
+     * @param tintIndex Only used when type is item_weapon, a tint index
+     */
+    CreatePickup?(
+        type: string,
+        name: string,
+        count: number,
+        label: string,
+        playerId: number,
+        components?: any[],
+        tintIndex?: number
+    ): void;
+
+    /**
+     * This function returns whether or not the job and grade specified is valid.
+     * @param job The name of the job.
+     * @param grade The grade of the job.
+     */
+    DoesJobExist(job: string, grade: number): boolean;
+
+    OneSync: OneSync;
+
     /**
      * This function registers a server callback.
      * @param name Server callback name
@@ -231,25 +266,5 @@ export interface Server extends Common {
         handler: (playerId: number, cb: (...args: any[]) => void, ...args: any[]) => void
     ): void;
 
-    /**
-     * This function registers an item as usable.
-     * @param item Item to register as usable
-     * @param cb Callback function
-     */
-    RegisterUsableItem(item: string, cb: (playerId: number) => void): void;
-
-    /**
-     * This function writes a trace if debugging is enabled in the configuration file.
-     * @param msg Anything to print to console
-     */
-    Trace(msg: any): void;
-
-    /**
-     * This function is to force a player to use an item.
-     * @param playerId Player server id
-     * @param itemName An item
-     */
-    UseItem(playerId: number, itemName: string): void;
-
-    OneSync: OneSync;
+    // TODO: TriggerClientCallback
 }
