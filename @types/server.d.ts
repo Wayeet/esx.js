@@ -75,16 +75,16 @@ export interface XPlayer extends PlayerData {
      */
     getIdentifier(): string;
 
-    // TODO: setGroup
+    setGroup(newGroup: string): void;
 
     /**
      * This function gets the current player group.
      */
     getGroup(): string;
 
-    // TODO: set(k, v)
+    set(k: any, v: any): void;
 
-    // TODO: get(k)
+    get(k: any): any;
 
     // TODO: missing minimal param
     /**
@@ -188,7 +188,7 @@ export interface XPlayer extends PlayerData {
      */
     getWeight(): number;
 
-    // TODO: getMaxWeight
+    getMaxWeight(): number;
 
     /**
      * This function is used to determinate if a player can carry an item, and is the successor to the previous item limit checks
@@ -253,7 +253,7 @@ export interface XPlayer extends PlayerData {
      */
     addWeaponAmmo(weaponName: string, ammoCount: number): void;
 
-    // TODO: updateWeaponAmmo
+    updateWeaponAmmo(weaponName: string, ammoCount: number): void;
 
     /**
      * This function sets the player weapon tint from the tint index
@@ -356,9 +356,27 @@ export interface XPlayer extends PlayerData {
 }
 
 export interface OneSync {
-    // TODO: GetPlayersInArea
+    /**
+     * @param source playerId or vector3 coordinates
+     * @param maxDistance number
+     * @param ignore table playerIds to ignore, where the key is playerId and value is true
+     */
+    GetPlayersInArea(
+        source: Coords | number,
+        maxDistance: number,
+        ignore?: Record<number, boolean>
+    ): { id: number; ped: number; coords: Coords; dist: number }[];
 
-    // TODO: GetClosestPlayer
+    /**
+     * @param source playerId or vector3 coordinates
+     * @param maxDistance number
+     * @param ignore table playerIds to ignore, where the key is playerId and value is true
+     */
+    GetClosestPlayer(
+        source: Coords | number,
+        maxDistance: number,
+        ignore?: Record<number, boolean>
+    ): { id: number; ped: number; coords: Coords; dist: number } | Record<string, never>;
 
     /**
      *
@@ -409,15 +427,57 @@ export interface OneSync {
      */
     SpawnPedInVehicle(model: string | number, vehicle: number, seat: number, cb?: (netId: number) => void): void;
 
-    // TODO: GetPedsInArea
+    /**
+     * @param coords vector3
+     * @param maxDistance number
+     * @param modelFilter table models to ignore, where the key is the model hash and the value is true
+     */
+    GetPedsInArea(coords: Coords, maxDistance: number, modelFilter?: Record<number, boolean>): number[];
 
-    // TODO: GetObjectsInArea
+    /**
+     * @param coords vector3
+     * @param maxDistance number
+     * @param modelFilter table models to ignore, where the key is the model hash and the value is true
+     */
+    GetObjectsInArea(coords: Coords, maxDistance: number, modelFilter?: Record<number, boolean>): number[];
 
-    // TODO: GetVehiclesInArea
+    /**
+     * @param coords vector3
+     * @param maxDistance number
+     * @param modelFilter table models to ignore, where the key is the model hash and the value is true
+     */
+    GetVehiclesInArea(coords: Coords, maxDistance: number, modelFilter?: Record<number, boolean>): number[];
 
-    // TODO: GetClosestPed
+    /**
+     * @param coords vector3
+     * @param maxDistance number
+     * @param modelFilter table models to ignore, where the key is the model hash and the value is true
+     * @returns number entityId, number distance, vector3 coords
+     */
+    GetClosestPed(
+        coords: Coords,
+        modelFilter?: Record<number, boolean>
+    ): [number, DistanceModelType | undefined, Coords | undefined];
 
-    // TODO: GetClosestObject
+    /**
+     * @param coords vector3
+     * @param maxDistance number
+     * @param modelFilter table models to ignore, where the key is the model hash and the value is true
+     * @returns number entityId, number distance, vector3 coords
+     */
+    GetClosestObject(
+        coords: Coords,
+        modelFilter?: Record<number, boolean>
+    ): [number, DistanceModelType | undefined, Coords | undefined];
 
-    // TODO: GetClosestVehicle
+    /**
+     * @param coords vector3
+     * @param maxDistance number
+     * @param modelFilter table models to ignore, where the key is the model hash and the value is true
+     * @returns number entityId, number distance, vector3 coords
+     */
+    GetClosestVehicle(
+        coords: Coords,
+        modelFilter?: Record<number, boolean>
+    ): [number, DistanceModelType | undefined, Coords | undefined];
 }

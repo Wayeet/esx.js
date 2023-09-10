@@ -48,9 +48,9 @@ export interface Client extends Common {
      */
     ShowNotification(msg: string, type?: "info" | "success" | "error", time?: number): void;
 
-    // TODO: TextUI
+    TextUI(message: string, type: string): void;
 
-    // TODO: HideUI
+    HideUI(): void;
 
     /**
      * This function shows an avanced notification.
@@ -90,14 +90,24 @@ export interface Client extends Common {
      */
     ShowFloatingHelpNotification(msg: string, coords: Coords): void;
 
-    // TODO: HashString
+    HashString(str: string): string;
 
-    // TODO: OpenContext
-    // TODO: PreviewContext
-    // TODO: CloseContext
-    // TODO: RefreshContext
+    OpenContext(...args: any[]): void;
 
-    // TODO: RegisterInput
+    PreviewContext(...args: any[]): void;
+
+    CloseContext(...args: any[]): void;
+
+    RefreshContext(...args: any[]): void;
+
+    RegisterInput(
+        command_name: string,
+        label: string,
+        input_group: string,
+        key: string,
+        on_press: () => void,
+        on_release?: () => void
+    ): void;
 
     UI: {
         Menu: {
@@ -152,7 +162,7 @@ export interface Client extends Common {
              */
             GetOpened(type: string | number, namespace: string, name: string): MenuObject;
 
-            // TODO: GetOpenedMenus
+            GetOpenedMenus(): MenuObject[];
 
             /**
              * This function checks if a menu is open.
@@ -389,7 +399,7 @@ export interface Client extends Common {
      */
     ShowInventory(): void;
 
-    // TODO: GetVehicleType
+    GetVehicleType(model: string | number): string;
 
     Scaleform: Scaleform;
 
@@ -405,7 +415,7 @@ export interface Client extends Common {
      */
     TriggerServerCallback(name: string, cb: (...args: any[]) => void, ...args: any[]): void;
 
-    // TODO: RegisterClientCallback
+    RegisterClientCallback(eventName: string, handler: (cb: (...args: any[]) => void, ...args: any[]) => void): void;
 }
 
 export interface Server extends Common {
@@ -465,9 +475,14 @@ export interface Server extends Common {
      */
     GetPlayerFromIdentifier(identifier: string): XPlayer | undefined;
 
-    // TODO: GetIdentifier
+    GetIdentifier(playerId: number): string | undefined;
 
-    // TODO: GetVehicleType
+    /**
+     * @param model string | number
+     * @param player number playerId
+     * @param cb function
+     */
+    GetVehicleType(model: string | number, player: number, cb: (vehicleType: string) => void): void;
 
     /**
      * This function logs to a Discord Webhook.
@@ -492,7 +507,7 @@ export interface Server extends Common {
         fields: { name: string; value: string; inline: boolean }
     ): void;
 
-    // TODO: RefreshJobs
+    RefreshJobs(): void;
 
     /**
      * This function registers an item as usable.
@@ -508,9 +523,9 @@ export interface Server extends Common {
      */
     UseItem(playerId: number, itemName: string): void;
 
-    // TODO: RegisterPlayerFunctionOverrides
+    RegisterPlayerFunctionOverrides(index: string, overrides: ((...args: any[]) => any)[]): void;
 
-    // TODO: SetPlayerFunctionOverride
+    SetPlayerFunctionOverride(index: string): void;
 
     /**
      * This function returns an item label or `undefined` if not found.
@@ -523,7 +538,7 @@ export interface Server extends Common {
      */
     GetJobs(): Record<string, ConfigJob>;
 
-    // TODO: GetUsableItems
+    GetUsableItems(): Record<string, true>;
 
     /**
      * This function creates a pickup.
@@ -564,5 +579,11 @@ export interface Server extends Common {
         handler: (playerId: number, cb: (...args: any[]) => void, ...args: any[]) => void
     ): void;
 
-    // TODO: TriggerClientCallback
+    /**
+     * @param player number playerId
+     * @param eventName string
+     * @param cb function
+     * @param args ... any
+     */
+    TriggerClientCallback(player: number, eventName: string, cb: (...args: any[]) => void, ...args: any[]): void;
 }

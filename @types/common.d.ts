@@ -1,3 +1,45 @@
+export interface Config {
+    Locale: string;
+
+    Accounts: Record<string, { label: string; round: boolean }>;
+
+    StartingAccountMoney: Record<string, number>;
+
+    DefaultSpawns: { x: number; y: number; z: number; heading: number }[];
+
+    AdminGroups: Record<string, boolean>;
+
+    EnablePaycheck: boolean;
+    LogPaycheck: boolean;
+    EnableSocietyPayouts: boolean;
+    MaxWeight: number;
+    PaycheckInterval: number;
+    EnableDebug: boolean;
+    EnableDefaultInventory: boolean;
+    EnableWantedLevel: boolean;
+    EnablePVP: boolean;
+
+    Multichar: boolean;
+    Identity: boolean;
+    DistanceGive: number;
+
+    AdminLogging: boolean;
+
+    DisableHealthRegeneration: boolean;
+    DisableVehicleRewards: boolean;
+    DisableNPCDrops: boolean;
+    DisableDispatchServices: boolean;
+    DisableScenarios: boolean;
+    DisableWeaponWheel: boolean;
+    DisableAimAssist: boolean;
+    DisableVehicleSeatShuff: boolean;
+
+    RemoveHudCommonents: Record<number, boolean>;
+
+    SpawnVehMaxUpgrades: boolean;
+    CustomAIPlates: string;
+}
+
 export interface PlayerData {
     accounts: Account[];
     coords: Coords;
@@ -132,11 +174,17 @@ export interface Common {
      */
     GetRandomString(length: number): string;
 
-    // TODO: GetConfig
+    /**
+     * This function Returns the ESX config and its current values.
+     */
+    GetConfig(): Config;
 
-    // TODO: GetWeapon
+    /**
+     * This function Returns The weapon and its full weapon name.
+     */
+    GetWeapon(weaponName: string): [number, Weapon];
 
-    // TODO: GetWeaponFromHash
+    GetWeaponFromHash(weaponHash: number): Weapon;
 
     /**
      * This function gets the complete weapon list and label.
@@ -162,7 +210,7 @@ export interface Common {
      */
     DumpTable(array: any[]): void;
 
-    // TODO: Round
+    Round: Math["Round"];
 
     Math: Math;
     Table: Table;
