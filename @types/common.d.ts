@@ -89,6 +89,42 @@ export interface Math {
     Trim(value: string): string;
 }
 
+export interface Table {
+    /**
+     * nil proof alternative to #table
+     */
+    SizeOf(t: any): number;
+
+    Set(t: any): Record<any, true>;
+
+    IndexOf(t: any, value: any): number;
+
+    LastIndexOf(t: any, value: any): number;
+
+    Find(t: any, cb: (element: any) => boolean): any | undefined;
+
+    FindIndex(t: any, cb: (element: any) => boolean): number;
+
+    Filter<T = any>(t: T, cb: (element: any) => boolean): Partial<T>;
+
+    Map(t: any, cb: (element: any) => any): any;
+
+    Reverse(t: any, cb: (element: any) => boolean): any;
+
+    Clone<T = any>(t: T): T;
+
+    Concat<T1 = any, T2 = any>(t1: T1, t2: T2): T1 & T2;
+
+    Join(t: any, sep: string): string;
+
+    TableContains(tab: any, val: any): boolean;
+
+    /**
+     * Sort function for pairs
+     */
+    Sort<T = any>(t: T, order?: (t: T, a: any, b: any) => boolean): T;
+}
+
 export interface Common {
     /**
      * This function clears a timeout from the ESX.SetTimeout function.
@@ -135,4 +171,5 @@ export interface Common {
     SetTimeout(milliseconds: number, callback: () => void): number;
 
     Math: Math;
+    Table: Table;
 }
