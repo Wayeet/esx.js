@@ -356,6 +356,26 @@ export interface XPlayer extends PlayerData {
 }
 
 export interface OneSync {
+    // TODO: GetPlayersInArea
+
+    // TODO: GetClosestPlayer
+
+    /**
+     *
+     * @param model You can either specify a model, for example `blista`, or a vehicle hash.
+     * @param coords The coords where the vehicle should be spawned. You can also parse a vector type without any issues
+     * @param heading The heading to spawn the vehicle at
+     * @param Properties Sets the properties that the vehicle spawns with uses the same structure as `ESX.Game.SetVehicleProperties`
+     * @param cb The returned function when the vehicle has been spawned. The invoked function has 1 argument which is the **NetId** of the vehicle
+     */
+    SpawnVehicle(
+        model: string | number,
+        coords: Coords,
+        heading: number,
+        Properties?: any,
+        cb?: (netId: number) => void
+    ): void;
+
     /**
      * An async function that creates server-sided objects.
      *
@@ -389,19 +409,15 @@ export interface OneSync {
      */
     SpawnPedInVehicle(model: string | number, vehicle: number, seat: number, cb?: (netId: number) => void): void;
 
-    /**
-     *
-     * @param model You can either specify a model, for example `blista`, or a vehicle hash.
-     * @param coords The coords where the vehicle should be spawned. You can also parse a vector type without any issues
-     * @param heading The heading to spawn the vehicle at
-     * @param Properties Sets the properties that the vehicle spawns with uses the same structure as `ESX.Game.SetVehicleProperties`
-     * @param cb The returned function when the vehicle has been spawned. The invoked function has 1 argument which is the **NetId** of the vehicle
-     */
-    SpawnVehicle(
-        model: string | number,
-        coords: Coords,
-        heading: number,
-        Properties?: any,
-        cb?: (netId: number) => void
-    ): void;
+    // TODO: GetPedsInArea
+
+    // TODO: GetObjectsInArea
+
+    // TODO: GetVehiclesInArea
+
+    // TODO: GetClosestPed
+
+    // TODO: GetClosestObject
+
+    // TODO: GetClosestVehicle
 }
