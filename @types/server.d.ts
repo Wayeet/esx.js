@@ -17,94 +17,22 @@ export interface ConfigJob {
 
 export interface XPlayer extends PlayerData {
     /**
-     * This function adds account money.
-     * @param account An valid account, a list of valid accounts can be found in the configuration file
-     * @param money 	Amount of money to add
+     * This function triggers an client event for the player.
+     * @param eventName Event name
+     * @param args Variable number of arguments
      */
-    addAccountMoney(account: string, money: number): void;
+    triggerEvent(eventName: string, ...args: any[]): void;
 
     /**
-     * This function adds an inventory item.
-     * @param item 	Item name
-     * @param count Amount of item to add
+     * This function sets the player's coords (teleports)
+     * @param coords The coords to be teleported to. Supports both vector3 and table types. If using a table type you can also specify `heading` to set the entity heading upon teleportation
      */
-    addInventoryItem(item: string, count: number): void;
+    setCoords(coords: Coords & { heading?: number }): void;
 
     /**
-     * This function adds money.
-     * @param money Amount of money to add
+     * This is an internal function used to update player coords, DO NOT USE IT.
      */
-    addMoney(money: number): void;
-
-    /**
-     * This function adds a weapon.
-     * @param weaponName Weapon name
-     * @param ammo 	Ammo count
-     */
-    addWeapon(weaponName: string, ammo: number): void;
-
-    /**
-     * This function adds the parsed ammo to the player weapon
-     * @param weaponName Weapon name
-     * @param ammoCount Ammo to add
-     */
-    addWeaponAmmo(weaponName: string, ammoCount: number): void;
-
-    /**
-   * This function adds a weapon component to a weapon, if the player has it, the available component list can be found in the weapon configuration file.
-   * @example xPlayer.addWeapon('WEAPON_ASSAULTRIFLE', 50)
-  xPlayer.addWeaponComponent('WEAPON_ASSAULTRIFLE', 'clip_drum')
-   * @param weaponName 
-   * @param weaponComponent 
-   */
-    addWeaponComponent(weaponName: string, weaponComponent: string): void;
-
-    /**
-     * This function is used to determinate if a player can carry an item, and is the successor to the previous item limit checks
-     * @param item Item name
-     * @param count Item count
-     */
-    canCarryItem(item: string, count: number): boolean;
-
-    /**
-   * This function is used to determinate if a player can swap an item for some other item.
-   * @param firstItem 	First item name
-   * @param firstItemCount First item count
-   * @param testItem Test item name
-   * @param testItemCount Test item count
-   * @example if xPlayer.canSwapItem('bread', 1, 'water', 1) then
-                xPlayer.removeInventoryItem('bread', 1)
-                xPlayer.addInventoryItem('water', 1)
-              else
-                xPlayer.showNotification('You don\'t have enough inventory space.')
-              end
-   */
-    canSwapItem(firstItem: string, firstItemCount: number, testItem: string, testItemCount: number): boolean;
-
-    /**
-     * @param index Index or table of indexes to clear
-     */
-    clearMeta(index: string | string[]): void;
-
-    /**
-     * @param index Meta index
-     * @param subIndex Met sub index
-     */
-    getMeta(index?: string, subIndex?: string): any;
-
-    /**
-     * This function gets details (returned in an table) for an account.
-     * @param account
-     */
-    getAccount(account: string): Account;
-
-    /**
-     * The returned table contains an index-value table of all accounts, and for each child there is a key-value tabl with the following content:
-     * @field name - Account name
-     * @field money - Account balance
-     * @field label - Account label
-     */
-    getAccounts(): Account[];
+    updateCoords(): void;
 
     /**
      * TODO: Asked about serialization over events, need to test
@@ -114,26 +42,70 @@ export interface XPlayer extends PlayerData {
     getCoords(useVector: boolean): Coords;
 
     /**
-     * This function gets the current player group.
+     * This function kicks a player with a reason.
+     * @param reason Kick reason, will be shown to player
      */
-    getGroup(): string;
+    kick(reason?: string): void;
+
+    /**
+     * This function sets the player cash balance.
+     * @param money New money amount
+     */
+    setMoney(money: number): void;
+
+    /**
+     * This function gets the current cash balance.
+     */
+    getMoney(): number;
+
+    /**
+     * This function adds money.
+     * @param money Amount of money to add
+     */
+    addMoney(money: number): void;
+
+    /**
+     * Removes money from a player's cash account.
+     * @param money Amount of money to remove
+     */
+    removeMoney(money: number): void;
 
     /**
      * This function returns the Rockstar identifier used
      */
     getIdentifier(): string;
 
+    // TODO: setGroup
+
+    /**
+     * This function gets the current player group.
+     */
+    getGroup(): string;
+
+    // TODO: set(k, v)
+
+    // TODO: get(k)
+
+    // TODO: missing minimal param
+    /**
+     * The returned table contains an index-value table of all accounts, and for each child there is a key-value tabl with the following content:
+     * @field name - Account name
+     * @field money - Account balance
+     * @field label - Account label
+     */
+    getAccounts(): Account[];
+
+    /**
+     * This function gets details (returned in an table) for an account.
+     * @param account
+     */
+    getAccount(account: string): Account;
+
     /**
      * This function returns the entire player inventory.
      * @param minimal Return inventory in a key-value table where key is item name, and only add items with count over 0 to that table.
      */
     getInventory(minimal: boolean): InventoryItem[];
-
-    /**
-     * This function gets an inventory item.
-     * @param item Item name
-     */
-    getInventoryItem(item: string): InventoryItem;
 
     /**
      * This function returns the current player job object.
@@ -147,112 +119,15 @@ export interface XPlayer extends PlayerData {
     getLoadout(minimal?: boolean): LoadoutItem[];
 
     /**
-     * This function gets the current cash balance.
-     */
-    getMoney(): number;
-
-    /**
      * This function returns the player name.
      */
     getName(): string;
 
     /**
-   * This functions returns the loadoutNum and a weapon object for the weapon if the player has it.
-   * @param weaponName 
-   * @example 
-   const {loadoutNum, weapon} = xPlayer.getWeapon('WEAPON_PISTOL')
-
-    if (weapon) {
-        console.log(xPlayer.loadout[loadoutNum].label)
-    } else {
-        console.log('weapon not found!')
-    }
-   */
-    getWeapon(weaponName: string): [number, LoadoutItem];
-
-    /**
-     * This function Returns the tint index of the specified weapon from the Player.
-     * @param weaponName Weapon name
+     * This function sets the player name.
+     * @param newName New player name
      */
-    getWeaponTint(weaponName: string): number;
-
-    /**
-     * This functions returns the current player weight in a number type, can be used to do calculations.
-     */
-    getWeight(): number;
-
-    /**
-     * This functions checks if the player has the specified item, if they do, it will return item and item count :)
-     * @param item Item name
-     */
-    hasItem(item: string): [InventoryItem, number];
-
-    /**
-     * This functions returns if the player has the specified weapon.
-     * @param weaponName
-     */
-    hasWeapon(weaponName: string): boolean;
-
-    /**
-     * This functions returns an boolean if the player has the specified weapon component for a given weapon. The available component list can be found in the weapon configuration file (config.weapons.lua).
-     * @param weaponName
-     * @param weaponComponent
-     */
-    hasWeaponComponent(weaponName: string, weaponComponent: string): boolean;
-
-    /**
-     * This function kicks a player with a reason.
-     * @param reason Kick reason, will be shown to player
-     */
-    kick(reason?: string): void;
-
-    /**
-     * This function removes account money.
-     * @param account Valid accounts can be found in configuration file
-     * @param money Amount of money
-     */
-    removeAccountMoney(account: string, money: number): void;
-
-    /**
-     * This function removes an inventory item.
-     * @param item Item name, valid items can be found in database table items
-     * @param count Amount of the item to remove
-     */
-    removeInventoryItem(item: string, count: number): void;
-
-    /**
-     * Removes money from a player's cash account.
-     * @param money Amount of money to remove
-     */
-    removeMoney(money: number): void;
-
-    /**
-     * This function removes a weapon from the player.
-     * @param weaponName Weapon name
-     */
-    removeWeapon(weaponName: string): void;
-
-    /**
-     * This function removes the parsed ammo to the player weapon
-     * @param weaponName Weapon name
-     * @param ammoCount Ammo count
-     */
-    removeWeaponAmmo(weaponName: string, ammoCount: number): void;
-
-    /**
-     * This function removes a weapon component from a player, if the player has it. The available component list can be found in the weapon configuration file (config.weapons.lua).
-     * @param weaponName Weapon name
-     * @param weaponComponent Weapon component
-     */
-    removeWeaponComponent(weaponName: string, weaponComponent: string): void;
-
-    /**
-     * Sets a value in the player's metadata.
-     * @param index Meta index
-     * @param value Meta value
-     * @param subValue Meta subvalue
-     */
-    setMeta(index: string, value: any, subValue?: string): void;
+    setName(newName: string): void;
 
     /**
      * This function sets money for an account.
@@ -262,11 +137,43 @@ export interface XPlayer extends PlayerData {
     setAccountMoney(account: string, money: number): void;
 
     /**
-     * This function sets the player's coords (teleports)
-     * @param coords The coords to be teleported to. Supports both vector3 and table types. If using a table type you can also specify `heading` to set the entity heading upon teleportation
+     * This function adds account money.
+     * @param account An valid account, a list of valid accounts can be found in the configuration file
+     * @param money Amount of money to add
      */
-    setCoords(coords: Coords & { heading?: number }): void;
+    addAccountMoney(account: string, money: number): void;
 
+    /**
+     * This function removes account money.
+     * @param account Valid accounts can be found in configuration file
+     * @param money Amount of money
+     */
+    removeAccountMoney(account: string, money: number): void;
+
+    // TODO: missing param metadata
+    /**
+     * This function gets an inventory item.
+     * @param item Item name
+     */
+    getInventoryItem(item: string): InventoryItem;
+
+    // TODO: missing params metadata and slot
+    /**
+     * This function adds an inventory item.
+     * @param item 	Item name
+     * @param count Amount of item to add
+     */
+    addInventoryItem(item: string, count: number): void;
+
+    // TODO: missing params metadata and slot
+    /**
+     * This function removes an inventory item.
+     * @param item Item name, valid items can be found in database table items
+     * @param count Amount of the item to remove
+     */
+    removeInventoryItem(item: string, count: number): void;
+
+    // TODO: missing param metadata
     /**
      * This function sets an inventory item count
      *
@@ -277,6 +184,46 @@ export interface XPlayer extends PlayerData {
     setInventoryItem(item: string, count: number): void;
 
     /**
+     * This functions returns the current player weight in a number type, can be used to do calculations.
+     */
+    getWeight(): number;
+
+    // TODO: getMaxWeight
+
+    /**
+     * This function is used to determinate if a player can carry an item, and is the successor to the previous item limit checks
+     * @param item Item name
+     * @param count Item count
+     */
+    canCarryItem(item: string, count: number): boolean;
+
+    /**
+     * This function is used to determinate if a player can swap an item for some other item.
+     * @param firstItem 	First item name
+     * @param firstItemCount First item count
+     * @param testItem Test item name
+     * @param testItemCount Test item count
+     * @example if xPlayer.canSwapItem('bread', 1, 'water', 1) then
+                    xPlayer.removeInventoryItem('bread', 1)
+                    xPlayer.addInventoryItem('water', 1)
+                else
+                    xPlayer.showNotification('You don\'t have enough inventory space.')
+                end
+     */
+    canSwapItem(firstItem: string, firstItemCount: number, testItem: string, testItemCount: number): boolean;
+
+    /**
+     * This functions sets the max weight that the player can hold in their inventory.
+     * @param newWeight New max weight
+     * @example 
+        // Adds 30 to the max weight if they are police :)
+        if (xPlayer.job.name == 'police') {
+            xPlayer.setMaxWeight(ESX.GetConfig().MaxWeight + 30)
+        }
+     */
+    setMaxWeight(newWeight: number): void;
+
+    /**
      * This functions sets the player job, the job must be defined in the `jobs` database table.
      * @param name Job name
      * @param grade Job grade
@@ -284,27 +231,29 @@ export interface XPlayer extends PlayerData {
     setJob(name: string, grade: string | number): void;
 
     /**
-   * This functions sets the max weight that the player can hold in their inventory.
-   * @param newWeight New max weight
-   * @example 
-    // Adds 30 to the max weight if they are police :)
-    if (xPlayer.job.name == 'police') {
-      xPlayer.setMaxWeight(ESX.GetConfig().MaxWeight + 30)
-    }
-   */
-    setMaxWeight(newWeight: number): void;
+     * This function adds a weapon.
+     * @param weaponName Weapon name
+     * @param ammo 	Ammo count
+     */
+    addWeapon(weaponName: string, ammo: number): void;
 
     /**
-     * This function sets the player cash balance.
-     * @param money New money amount
+     * This function adds a weapon component to a weapon, if the player has it, the available component list can be found in the weapon configuration file.
+     * @example xPlayer.addWeapon('WEAPON_ASSAULTRIFLE', 50)
+                xPlayer.addWeaponComponent('WEAPON_ASSAULTRIFLE', 'clip_drum')
+     * @param weaponName 
+     * @param weaponComponent 
      */
-    setMoney(money: number): void;
+    addWeaponComponent(weaponName: string, weaponComponent: string): void;
 
     /**
-     * This function sets the player name.
-     * @param newName New player name
+     * This function adds the parsed ammo to the player weapon
+     * @param weaponName Weapon name
+     * @param ammoCount Ammo to add
      */
-    setName(newName: string): void;
+    addWeaponAmmo(weaponName: string, ammoCount: number): void;
+
+    // TODO: updateWeaponAmmo
 
     /**
      * This function sets the player weapon tint from the tint index
@@ -312,6 +261,70 @@ export interface XPlayer extends PlayerData {
      * @param weaponTintIndex Weapon tint index
      */
     setWeaponTint(weaponName: string, weaponTintIndex: number): void;
+
+    /**
+     * This function Returns the tint index of the specified weapon from the Player.
+     * @param weaponName Weapon name
+     */
+    getWeaponTint(weaponName: string): number;
+
+    /**
+     * This function removes a weapon from the player.
+     * @param weaponName Weapon name
+     */
+    removeWeapon(weaponName: string): void;
+
+    /**
+     * This function removes a weapon component from a player, if the player has it. The available component list can be found in the weapon configuration file (config.weapons.lua).
+     * @param weaponName Weapon name
+     * @param weaponComponent Weapon component
+     */
+    removeWeaponComponent(weaponName: string, weaponComponent: string): void;
+
+    /**
+     * This function removes the parsed ammo to the player weapon
+     * @param weaponName Weapon name
+     * @param ammoCount Ammo count
+     */
+    removeWeaponAmmo(weaponName: string, ammoCount: number): void;
+
+    /**
+     * This functions returns an boolean if the player has the specified weapon component for a given weapon. The available component list can be found in the weapon configuration file (config.weapons.lua).
+     * @param weaponName
+     * @param weaponComponent
+     */
+    hasWeaponComponent(weaponName: string, weaponComponent: string): boolean;
+
+    /**
+     * This functions returns if the player has the specified weapon.
+     * @param weaponName
+     */
+    hasWeapon(weaponName: string): boolean;
+
+    /**
+     * This functions checks if the player has the specified item, if they do, it will return item and item count :)
+     * @param item Item name
+     */
+    hasItem(item: string): [InventoryItem, number];
+
+    /**
+     * This functions returns the loadoutNum and a weapon object for the weapon if the player has it.
+     * @param weaponName 
+     * @example const {loadoutNum, weapon} = xPlayer.getWeapon('WEAPON_PISTOL');
+
+                if (weapon) {
+                    console.log(xPlayer.loadout[loadoutNum].label);
+                } else {
+                    console.log('weapon not found!');
+                }
+     */
+    getWeapon(weaponName: string): [number, LoadoutItem];
+
+    /**
+     * This function shows a basic notification to the player.
+     * @param msg The message to display
+     */
+    showNotification(msg: string): void;
 
     /**
      * This function shows a help notification with a message. These help notification support displaying button inputs, see this list
@@ -323,22 +336,23 @@ export interface XPlayer extends PlayerData {
     showHelpNotification(msg: string, thisFrame: boolean, beep: boolean, duration: number): void;
 
     /**
-     * This function shows a basic notification to the player.
-     * @param msg The message to display
+     * @param index Meta index
+     * @param subIndex Met sub index
      */
-    showNotification(msg: string): void;
+    getMeta(index?: string, subIndex?: string): any;
 
     /**
-     * This function triggers an client event for the player.
-     * @param eventName Event name
-     * @param args Variable number of arguments
+     * Sets a value in the player's metadata.
+     * @param index Meta index
+     * @param value Meta value
+     * @param subValue Meta subvalue
      */
-    triggerEvent(eventName: string, ...args: any[]): void;
+    setMeta(index: string, value: any, subValue?: string): void;
 
     /**
-     * This is an internal function used to update player coords, DO NOT USE IT.
+     * @param index Index or table of indexes to clear
      */
-    updateCoords(): void;
+    clearMeta(index: string | string[]): void;
 }
 
 export interface OneSync {
