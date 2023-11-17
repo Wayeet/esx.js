@@ -462,7 +462,7 @@ export interface OneSync {
     GetClosestPed(
         coords: Coords,
         modelFilter?: Record<number, boolean>
-    ): [number, DistanceModelType | undefined, Coords | undefined];
+    ): [number, Coords | undefined];
 
     /**
      * @param coords vector3
@@ -473,7 +473,7 @@ export interface OneSync {
     GetClosestObject(
         coords: Coords,
         modelFilter?: Record<number, boolean>
-    ): [number, DistanceModelType | undefined, Coords | undefined];
+    ): [number, Coords | undefined];
 
     /**
      * @param coords vector3
@@ -484,5 +484,5 @@ export interface OneSync {
     GetClosestVehicle(
         coords: Coords,
         modelFilter?: Record<number, boolean>
-    ): [number, DistanceModelType | undefined, Coords | undefined];
+    ): [number, Coords | undefined];
 }
