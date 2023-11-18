@@ -459,10 +459,7 @@ export interface OneSync {
      * @param modelFilter table models to ignore, where the key is the model hash and the value is true
      * @returns number entityId, number distance, vector3 coords
      */
-    GetClosestPed(
-        coords: Coords,
-        modelFilter?: Record<number, boolean>
-    ): [number, Coords | undefined];
+    GetClosestPed(coords: Coords, modelFilter?: Record<number, boolean>): [number, Coords | undefined];
 
     /**
      * @param coords vector3
@@ -470,10 +467,7 @@ export interface OneSync {
      * @param modelFilter table models to ignore, where the key is the model hash and the value is true
      * @returns number entityId, number distance, vector3 coords
      */
-    GetClosestObject(
-        coords: Coords,
-        modelFilter?: Record<number, boolean>
-    ): [number, Coords | undefined];
+    GetClosestObject(coords: Coords, modelFilter?: Record<number, boolean>): [number, Coords | undefined];
 
     /**
      * @param coords vector3
@@ -481,8 +475,5 @@ export interface OneSync {
      * @param modelFilter table models to ignore, where the key is the model hash and the value is true
      * @returns number entityId, number distance, vector3 coords
      */
-    GetClosestVehicle(
-        coords: Coords,
-        modelFilter?: Record<number, boolean>
-    ): [number, Coords | undefined];
+    GetClosestVehicle(coords: Coords, modelFilter?: Record<number, boolean>): [number, Coords | undefined];
 }
