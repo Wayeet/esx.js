@@ -157,7 +157,7 @@ export interface XPlayer extends PlayerData {
      * @param item Item name
      * @param metadata does nothing
      */
-    getInventoryItem(item: string, metadata?: any): InventoryItem;
+    getInventoryItem(item: string, metadata?: any): InventoryItem | undefined;
 
     /**
      * This function adds an inventory item.
