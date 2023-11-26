@@ -52,9 +52,13 @@ export interface PlayerData {
     playerId: number;
     source: number;
     variables: Record<string, any>;
-    weight: number;
     maxWeight: number;
     metadata: Record<string, any>;
+    license: string;
+    firstName: string;
+    lastName: string;
+    dateofbirth: string;
+    height: number;
 }
 
 export interface InventoryItem {
