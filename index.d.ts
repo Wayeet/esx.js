@@ -46,7 +46,7 @@ export interface Client extends Common {
      * @param type What type the notification would be
      * @param time For how long the notification should show
      */
-    ShowNotification(msg: string, type?: "info" | "success" | "error", time?: number): void;
+    ShowNotification(msg: string, type?: string, time?: number): void;
 
     TextUI(message: string, type: string): void;
 
