@@ -1,4 +1,12 @@
-import { MenuObject, ProgressbarOptions, Scaleform, Streaming, VehicleProperties } from "./@types/client";
+import {
+    ContextMenu,
+    ContextMenuElement,
+    MenuObject,
+    ProgressbarOptions,
+    Scaleform,
+    Streaming,
+    VehicleProperties,
+} from "./@types/client";
 import { Common, Coords, PlayerData } from "./@types/common";
 import { ConfigJob, OneSync, XPlayer } from "./@types/server";
 
@@ -92,13 +100,25 @@ export interface Client extends Common {
 
     HashString(str: string): string;
 
-    OpenContext(...args: any[]): void;
+    OpenContext(
+        position: ContextMenu["position"],
+        elements: ContextMenuElement[],
+        onSelect?: ContextMenu["onSelect"],
+        onClose?: ContextMenu["onClose"],
+        canClose?: ContextMenu["canClose"]
+    ): void;
 
-    PreviewContext(...args: any[]): void;
+    PreviewContext(
+        position: ContextMenu["position"],
+        elements: ContextMenuElement[],
+        onSelect?: ContextMenu["onSelect"],
+        onClose?: ContextMenu["onClose"],
+        canClose?: ContextMenu["canClose"]
+    ): void;
 
-    CloseContext(...args: any[]): void;
+    CloseContext(): void;
 
-    RefreshContext(...args: any[]): void;
+    RefreshContext(eles: ContextMenuElement[], position: ContextMenu["position"]): void;
 
     RegisterInput(
         command_name: string,

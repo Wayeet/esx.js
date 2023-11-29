@@ -256,3 +256,27 @@ export interface Streaming {
      */
     RequestWeaponAsset(weaponHash: string | number, cb: () => void): void;
 }
+
+export interface ContextMenu {
+    position: "left" | "center" | "right";
+    eles: ContextMenuElement[];
+    canClose: boolean;
+    onSelect?(menu: ContextMenu, element: ContextMenuElement): void;
+    onClose?(menu: ContextMenu): void;
+}
+
+export interface ContextMenuElement {
+    icon: string;
+    title: string;
+    description?: string;
+    unselectable?: boolean;
+    disabled?: boolean;
+    input?: boolean;
+    inputType?: string;
+    inputPlaceholder?: string;
+    inputValues?: { text: string; value: string }[];
+    inputValue?: number | string;
+    inputMin?: number;
+    inputMax?: number;
+    name?: string;
+}
