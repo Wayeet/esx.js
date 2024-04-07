@@ -1,11 +1,11 @@
 {
-  "name": "@r3ps4j/esx.js",
+  "name": "@wayeet/esx.js",
   "version": "1.0.5",
-  "description": "A type wrapper for ESX (es_extended) framework in FiveM",
+  "description": "A type wrapper for ESX (es_extended)",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/r3ps4J/esx.js.git"
+    "url": "git@github.com:Wayeet/esx.js.git"
   },
   "keywords": [
     "fivem",
@@ -19,12 +19,12 @@
     "typescript",
     "javascript"
   ],
-  "author": "r3ps4J <info@r3ps4j.nl> (https://www.r3ps4j.nl/)",
+  "author": "Wayeet",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/r3ps4J/esx.js/issues"
+    "url": "https://github.com/Wayeet/esx.js/pulls"
   },
-  "homepage": "https://github.com/r3ps4J/esx.js#readme",
+  "homepage": "https://github.com/Wayeet/esx.js#readme",
   "files": [
     "index.d.ts",
     "@types/*.d.ts"
