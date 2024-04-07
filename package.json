@@ -1,6 +1,6 @@
 {
   "name": "@wayeet/esx.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A wrapper for ESX (Legacy and OnS) with typings",
   "main": "index.js",
   "repository": {

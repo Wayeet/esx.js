@@ -22,7 +22,7 @@ The version of ItsChip is deprecated since ESX remove the `getSharedObject()` fu
 | esx.js version | es_extended version |
 | ---------------------- | ------------------- |
 | @r3ps4j/esx.js@1.0.5   | 1.9.4               |
-| @wayeet/esx.js@1.0.0    | 1.10.5               |
+| @wayeet/esx.js@1.0.1   | 1.10.5               |
 
 ## Installation
 
