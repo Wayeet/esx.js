@@ -4,6 +4,10 @@
   <img src="https://i.imgur.com/lj2RCGp.jpg" width="150" height="150"/>
 </div>
 
+# NPM
+
+https://www.npmjs.com/package/@wayeet/esx.js
+
 ## About
 
 This is a JavaScript/TypeScript wrapper for the ESX (es_extended) framework in FiveM.
